@@ -1,7 +1,6 @@
 <?php
 
     /**
-     * APP Core Class
      * create url & load core controller
      * URL FORMAT - /controller/method/parameters
      */
