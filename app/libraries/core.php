@@ -8,23 +8,36 @@
     
     class Core{
 
-        protected $currentControllerName = "Page";
+        protected $currentController = "Page";
         protected $currentMethod = "index";
         protected $parameters = [];
 
         public function __construct(){
 
             $urlComponetnsArray = $this->getURLComponents();
-            $requiredControllerName = $urlComponetnsArray[0];
-            $currentControllerPath = "../app/controllers/" . ucwords($requiredControllerName) . ".php";
+            $requiredController = ucwords($urlComponetnsArray[0]) ?: $this->currentController;
+            $currentControllerPath = "../app/controllers/" . $requiredController . ".php";
 
             if(file_exists($currentControllerPath)){
-                $this->currentControllerName = ucwords($requiredControllerName);
+                $this->currentController = $requiredController;
                 unset($urlComponetnsArray[0]);
             }
 
-            require_once $currentControllerPath;
-            $this->currentControllerName = new $this->currentControllerName;
+            $this->loadRequiredController($currentControllerPath);
+
+            if(isset($urlComponetnsArray[1])){
+                $requiredMethodName = $urlComponetnsArray[1];
+
+                if(method_exists($this->currentController, $requiredMethodName)){
+                    $this->currentMethod = $requiredMethodName;
+                }
+
+                unset($urlComponetnsArray[1]);
+            }
+  
+            $this->parameters = $urlComponetnsArray ? array_values($urlComponetnsArray) : [];
+            
+            call_user_func_array([$this->currentController, $this->currentMethod], $this->parameters);
 
         }
 
@@ -45,6 +58,14 @@
             $url = filter_var($url, FILTER_SANITIZE_URL);
             $url = explode("/", $url);
             return $url;
+
+        }
+
+
+        public function loadRequiredController($currentControllerPath){
+
+            require_once $currentControllerPath;
+            $this->currentController = new $this->currentController;
 
         }
         
