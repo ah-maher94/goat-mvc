@@ -9,7 +9,7 @@
         }
 
         public function index(){
-            $this->loadview("hello");
+            $this->loadview("hello", ["title"=>"GOAT"]);
         }
 
     }
