@@ -4,12 +4,14 @@
 
         public function __construct(){
 
-            echo "Page Controller";
+            $this->userModel = $this->loadModel("user");
         
         }
 
         public function index(){
+
             $this->loadview("hello", ["title"=>"GOAT"]);
+        
         }
 
     }
