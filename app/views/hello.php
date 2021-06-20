@@ -1,3 +1,5 @@
+<?php include_once APP_ROOT."/views/_includes/header.php"; ?>
+
 <?php 
         
         echo $data["title"]; 
@@ -8,3 +10,4 @@
 
 ?>
 
+<?php include_once APP_ROOT."/views/_includes/footer.php"; ?>
