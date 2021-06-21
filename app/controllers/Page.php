@@ -5,12 +5,15 @@
         public function __construct(){
 
             $this->userModel = $this->loadModel("user");
+            $record = ["name" => "AhmedFinal", "email" => "ahmed@gmail.com"];
+            $this->userModel->insert($record);
         
         }
 
         public function index(){
-
-            $this->loadview("hello", ["title"=>"GOAT"]);
+            
+            $data = $this->userModel->getAll();
+            $this->loadview("hello", $data);
         
         }
 

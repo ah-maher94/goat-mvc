@@ -1,12 +1,11 @@
 <?php include_once APP_ROOT."/views/_includes/header.php"; ?>
 
 <?php 
-        
-        echo $data["title"]; 
-
-        echo PHP_EOL;
-
-        echo APP_ROOT;
+        var_dump($data);
+        $users = $data;
+        foreach($users as $user){
+                echo $user["name"] . " " . $user['email'];
+        }
 
 ?>
 
